@@ -8,10 +8,11 @@ ctx.verify_mode = ssl.CERT_NONE
 
 
 def get_api_key():
-    """Request API KEY from Palo Alto Netowrks Firewall or Panorama"""
+    """Request API KEY from Palo Alto Netowrks Firewall or Panorama
+    Important: change the user and password values in the lines below"""
     host = input('Enter hostname or IP: ')
     req_key = 'https://' + host + \
-        '/api/?type=keygen&user=zm_api&password=Nairobi1Mombasa1!'  # creds
+        '/api/?type=keygen&user=<username>&password=<password>'  # creds
     # print(req_key)
     fh = request.urlopen(req_key, context=ctx)
     data = fh.read().decode()
