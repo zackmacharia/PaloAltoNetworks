@@ -23,7 +23,8 @@ def add_ip_address():
     add_ip_address = 'https://' + host + '/api/' + key + xpath
     fh = request.urlopen(add_ip_address, context=ctx)
     fh_read = fh.read().decode()
-    return fh_read
+    # return fh_read
+    print(fh_read)
 
 
 add_ip_address()
