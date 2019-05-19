@@ -25,7 +25,7 @@ def get_admins():
                             for profile in custom_role.iter('profile'):
                                 admin_role = profile.text
                                 # print(admin_role)
-        print(admin_name, ':', admin_role)
+        print(admin_name + ':' + admin_role)
 
 
 get_admins()
