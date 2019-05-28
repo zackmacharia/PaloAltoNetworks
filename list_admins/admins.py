@@ -5,6 +5,8 @@ tree = ET.parse(filename)
 
 
 def get_admin_info():
+    """This functions gets the configured administrators and their roles on a
+    Palo Alto Networks Firewall"""
     for elem in tree.iter():
         if 'users' in elem.tag:
             users_node = elem
