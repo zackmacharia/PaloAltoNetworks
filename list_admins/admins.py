@@ -18,6 +18,9 @@ def get_admin_info():
                         if 'superuser' in role.tag:
                             if role.text == 'yes':
                                 role = 'Super User'
+                        elif 'superreader' in role.tag:
+                            if role.text == 'yes':
+                                role = 'Super Reader'
                         elif 'profile' in role.tag:
                             role = role.text
                 print('Administrator: ', admin_name, '-', 'Role: ', role)
