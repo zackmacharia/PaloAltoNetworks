@@ -25,7 +25,6 @@ def get_admin_info():
                                 role = 'superreader'
                         elif 'profile' in role.tag:
                             role = role.text
-                # print('Administrator: ', admin_name, '-', 'Role: ', role)
                 with open('admin_file.txt', mode='a') as f:
                     f.write(admin_name + ' : ')
                     f.write(role + '\n')
