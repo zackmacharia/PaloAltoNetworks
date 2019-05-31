@@ -2,8 +2,8 @@ import xml.etree.cElementTree as ET
 
 filename = input('Enter a configuration file name: ')
 tree = ET.parse(filename)
-admins = list()
-set_admin = set()
+output = {}
+admininstrators = {}
 
 
 def get_admin_info():
@@ -25,9 +25,13 @@ def get_admin_info():
                                 role = 'superreader'
                         elif 'profile' in role.tag:
                             role = role.text
-                with open('admin_file.txt', mode='a') as f:
-                    f.write(admin_name + ' : ')
-                    f.write(role + '\n')
+                output[admin_name] = role
+    with open('admin_file.txt', mode='a') as f:
+        for admin_name, role in output.items():
+            if admin_name not in admininstrators:
+                admininstrators[admin_name] = role
+                f.write(admin_name + ' : ')
+                f.write(role + '\n')
 
 
 get_admin_info()
