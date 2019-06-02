@@ -1,0 +1,6 @@
+INFO:root:Started
+INFO:root:Enumerating security policies -- started
+INFO:root:Enumerating security policies -- finished
+INFO:root:Enumerating nat policies -- started
+INFO:root:Enumerating nat policies -- ended
+INFO:root:Finished
