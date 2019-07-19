@@ -2,9 +2,9 @@ import key
 import requests
 import xml.etree.cElementTree as ET
 
-#Goal: Create a script to check for HA best practice configuration
-# link monitoring, keepalives, ha1 backup, priority
-# How do we scale the RE offering?
+"""Goal: Create a script to check for HA best practice configuration
+ink monitoring, keepalives, ha1 backup, priority
+How do we scale the RE offering?"""
 
 host = 'fw_ip_address'
 
@@ -14,8 +14,8 @@ def all_connected_fws():
     Formats the XML data returned writes the firewall ip-addresses
     to a file named 'fwips.txt'
     """
-    output = requests.get('https://'+ host + '/api/?type=op&cmd=<show>'\
-                          '<devices><all></all></devices></show>&key='\
+    output = requests.get('https://' + host + '/api/?type=op&cmd=<show>'
+                          '<devices><all></all></devices></show>&key='
                           + key.pan_vm_key, verify=False)
     data = output.text
     root = ET.fromstring(data)
@@ -34,10 +34,10 @@ def access_fws():
         for line in lines:
             line = line.rstrip()
             # print(line)
-            output = requests.get('https://'+ host + '/api/?type=op&cmd='\
-                                   '<show><high-availability><link-monitoring>'\
-                                   '</link-monitoring></high-availability>'\
-                                   '</show>&key='+ key.pa_vm_a_key, verify=False)
+            output = requests.get('https://' + host + '/api/?type=op&cmd='
+                                  '<show><high-availability><link-monitoring>'
+                                  '</link-monitoring></high-availability>'
+                                  '</show>&key=' + key.pa_vm_a_key, verify=False)
             print(output.text)
 
 
