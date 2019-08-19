@@ -3,26 +3,6 @@ import ipaddress
 import requests
 import keys
 
-print("""
-         * ****************************************************
-         *This program takes the firewall ip address and the port number. *
-         * It then get the interface or sub interface IP Address and displays*
-         *it on the console screen.                                                                 *
-         *NOTE: Please enter interface/port number in numeric fashion     *
-         ******************************************************
-""")
-
-
-# while True:
-#     try:
-#         host = input("Enter Firewall's IP Address: ")
-#         ipaddress.ip_address(host) # validate user input is a valid IP Address
-#         break
-#     except:
-#         print('Error! Please enter a valid IP Address.')
-#
-# int_no = input("Enter Firewall's Ethernet Port Number: ")
-
 
 def sub_int_ipaddr():
     """Get Subinterfac IP Address from Palo Alto Firewall"""
@@ -77,4 +57,4 @@ def main():
         int_ipaddr()
 
 
-# main()
+main()
