@@ -3,8 +3,6 @@ import ipaddress
 import requests
 import keys
 
-print('You will need to first generate API keys')
-
 
 def sub_int_ipaddr():
     """Get Subinterfac IP Address from Palo Alto Firewall"""
