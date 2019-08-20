@@ -1,8 +1,11 @@
-import xml.etree.ElementTree as ET
-import ipaddress
-import requests
 import keys
+import requests
+import ipaddress
+import xml.etree.ElementTree as ET
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+# supresses SSL warnings on console output
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 while True:
     try:
@@ -37,7 +40,9 @@ def sub_int_ipaddr():
         for elem in tree.iter('entry'):
             ipaddr = elem.attrib
             int_ipaddr= ipaddr['name']
-            print(int_ipaddr)
+            print(' ')
+            print('Ethernet1/' + int_no + ' IP Address is: ' + int_ipaddr)
+            print(' ')
 
 
 def int_ipaddr():
@@ -60,7 +65,9 @@ def int_ipaddr():
         for elem in tree.iter('entry'):
             ipaddr = elem.attrib
             int_ipaddr= ipaddr['name']
-            print(int_ipaddr)
+            print(' ')
+            print('Ethernet1/' + int_no + ' IP Address is: ' + int_ipaddr)
+            print(' ')
 
 
 def main():
