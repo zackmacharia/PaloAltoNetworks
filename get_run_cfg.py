@@ -4,8 +4,11 @@ import keys
 
 
 def local_run_cfg():
-    """Request running configuration from Palo Alto Netowrks Firewall. This is only
-    for the "LOCAL RUNNING" configuration not pushed from PANORAMA"""
+    """
+    Request running configuration from Palo Alto Netowrks Firewall. This is only
+    for the "LOCAL RUNNING" configuration not pushed from PANORAMA
+    """
+
     host = input('Enter hostname or IP: ')
     apikey = keys.homefw2_key.strip()
     xpath = '/api/?type=op&cmd=<show><config><running></running></config></show>'\

@@ -20,11 +20,12 @@ int_no = input("Enter Firewall's Ethernet Port Number: ")
 
 def sub_int_ipaddr():
     """Get Subinterfac IP Address from Palo Alto Firewall"""
-    interface = "\'" +  'ethernet1/' + int_no + "\'" # sub-interface with single quotes per API
+
+    interface = "\'" +  'ethernet1/' + int_no + "\'" # formats userinput to 'ethernet1/<userinput>'
     split_int = interface.split('.')
     main_int = split_int[0] + "\'"  # physical interface with single quote per API
-    # apikey = keys.homefw2_key
-    apikey = keys.pa_vm_a()
+    apikey = keys.homefw2_key
+    # apikey = keys.pa_vm_a()
     xpath = "/api/?type=config&action=get&xpath=/config/devices/entry[@name="\
                  "'localhost.localdomain']/network/interface/ethernet/entry[@name=" + main_int + \
                  "]/layer3/units/entry[@name=" + interface + "]/ip&key=" + apikey
@@ -48,8 +49,8 @@ def sub_int_ipaddr():
 def int_ipaddr():
     """Get Physical Interfac IP Address from Palo Alto Firewall"""
     interface = "\'" +  'ethernet1/' + int_no + "\'"
-    # apikey = keys.homefw2_key
-    apikey = keys.pa_vm_a()
+    apikey = keys.homefw2_key
+    # apikey = keys.pa_vm_a()
     xpath = "/api/?type=config&action=get&xpath=/config/devices/entry[@name="\
                  "'localhost.localdomain']/network/interface/ethernet/entry[@name=" + interface + "]/layer3/ip" \
                 "&key="+ apikey
@@ -76,5 +77,5 @@ def main():
     else:
         int_ipaddr()
 
-
-main()
+if __name__ == '__main__':
+    main()

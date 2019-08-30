@@ -14,6 +14,7 @@ def all_connected_fws():
     Formats the XML data returned writes the firewall ip-addresses
     to a file named 'fwips.txt'
     """
+
     output = requests.get('https://' + host + '/api/?type=op&cmd=<show>'
                           '<devices><all></all></devices></show>&key='
                           + key.pan_vm_key, verify=False)
@@ -41,5 +42,5 @@ def access_fws():
             print(output.text)
 
 
-# all_connected_fws()
-access_fws()
+if __name__ == '__main__':
+    access_fws()
