@@ -10,6 +10,7 @@ ctx.verify_mode = ssl.CERT_NONE
 
 def get_latest_content(host):
     """Request latest content from Palo Alto Netowrks content server"""
+    
     host = input('Enter hostname or IP: ')
     if len(host) < 1:
         host = '192.168.1.1'
