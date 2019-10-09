@@ -1,4 +1,7 @@
+import datetime
+import getpass
 import re
+import time
 import xml.etree.cElementTree as ET
 
 import requests
@@ -9,10 +12,10 @@ from Keys import keys
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
-class pawn():
-    """Base class for firewall and Panorama class"""
+class Pawn():
+    """Base class for Firewall and Panorama class"""
 
-    def __init__(self,ip):
+    def __init__(self, ip):
         """PAWN class instantiation"""
 
         self.ip = ip
@@ -33,23 +36,14 @@ class pawn():
             response = requests.get(pan_api_call, verify=False)
             print(f'Commit for Panorama ', self.ip, 'successful')
 
-        # cf = requests.get('https://' + self.ip + '/api/?type=commit&' + \
-        #                   'cmd=<commit><force></force></commit>&key=' + \
-        #                    keys.pan_vm_key(), verify=False)
-        # if cf.status_code == 200:
-        #     print(f'Commit to {self.ip} successful!')
-        # else:
-        #     cf = requests.get('https://' + self.ip + '/api/?type=commit&' + \
-        #                       'cmd=<commit><force></force></commit>&key=' + \
-        #                        keys.pa_vm_key(), verify=False)
-        #     print(f'Commit to {self.ip} successful')
-
     def get_api_key(self):
         """Request API KEY from Palo Alto Netowrks Firewall or Panorama
         Important: change the user and password values in the lines below"""
 
-        req_key = 'https://' + self.ip + \
-            '/api/?type=keygen&user=' + self.username + '&password=' + self.password  # creds
+        username = input('Username:')
+        password = getpass.getpass(prompt='Password: ')
+        req_key = 'https://' + self.ip + '/api/?type=keygen&user='
+        req_key += username + '&password=' + password  # creds
         data = requests.get(req_key, verify=False)
         data_string = data.text
         pattern = re.compile(r"<key>(.*?)</key>")
@@ -58,6 +52,8 @@ class pawn():
         print(key)
 
     def generate_tsf(self):
+        """Generate Tech Support File"""
+
         xpath = 'https://' + self.ip + '/api/?type=op&cmd=<request>'
         xpath += '<tech-support><dump></dump></tech-support></request>&key='
         fw_api_call = xpath + self.fw_key
@@ -70,7 +66,8 @@ class pawn():
             print(f'TSF for Panorama ', self.ip, 'generated')
 
 
-class Panorama(pawn):
+class Panorama(Pawn):
+    """Panorama class"""
 
     def all_connected_fws(self):
         """Gets all firewalls connected to panorama.
@@ -111,9 +108,66 @@ class Panorama(pawn):
                         f.write(fw_ip)
 
 
-class Firewall(pawn):
-    pass
+class Firewall(Pawn):
+    """Firewall class"""
+
+    def descriptors_on_chip_to_file(self, interval='12'):
+        """Get Packet Descriptors on Chip CPU percentage and writes output
+        to a text file name *packet_descriptors.txt*; default interval
+        value is 12 hours. NICE TO HAVE: Print only the average numbers"""
+
+        self.interval = interval
+
+        output = requests.get('https://'+self.ip+'/api/?type=op&cmd=<show>'\
+                              '<running><resource-monitor><hour><last>' + \
+                              self.interval + '</last></hour></resource-monitor>'\
+                              '</running></show>&key='+keys.sg_pa_200_key(), \
+                              verify=False)
+        if output.status_code == 200:
+            print('Succesfully Connected to', self.ip)
+            data = output.text
+            root = ET.fromstring(data)
+            date = datetime.datetime.now()
+            utc_time = datetime.datetime.utcnow()
+            time.sleep(1)
+            print('Writing data to file')
+            with open('packet_descriptors.txt', mode='a+') as f:
+                f.write('*****************************************' + '\n')
+                f.write(str(utc_time) + ':' + ' Time is in UTC' + '\n')
+                f.write('*****************************************' + '\n')
+                for elem in root.iter():
+                    if elem.tag == 'resource-utilization':
+                        stats_node = elem
+                        for child in stats_node:
+                            for item in child:
+                                tag = item.tag
+                                text = item.text
+                                stats = tag + ' ' + ':' + ' ' + text + ' ' + '\n'
+                                f.write(stats)
+        else:
+            print('Failed to connect to' + self.ip + '. No files written.')
+
+        # data = output.text
+        # print(data)
+        # root = ET.fromstring(data)
+        # date = datetime.datetime.now()
+        # utc_time = datetime.datetime.utcnow()
+
+        # with open('packet_descriptors.txt', mode='a+') as f:
+        #     f.write('*****************************************' + '\n')
+        #     f.write(str(utc_time) + ':' + ' Time is in UTC' + '\n')
+        #     f.write('*****************************************' + '\n')
+        #     for elem in root.iter():
+        #         if elem.tag == 'resource-utilization':
+        #             stats_node = elem
+        #             for child in stats_node:
+        #                 for item in child:
+        #                     tag = item.tag
+        #                     text = item.text
+        #                     stats = tag + ' ' + ':' + ' ' + text + ' ' + '\n'
+        #                     f.write(stats)
 
 
-if __name__ == '__main__':
-    main()
+# fw = Firewall('47.190.134.39')
+#
+# fw.descriptors_on_chip_to_file()
