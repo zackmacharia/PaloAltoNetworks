@@ -8,6 +8,7 @@ tree = ET.parse(filename)
 def enumerate_sec_rules():
     "Function enumerates the security policies configured\
     on a Palo Alto Networks Firewall"
+    
     logging.info('Enumerating security policies -- started')
     for security in tree.iter('security'):  # starts loop at the security tag
         for rules in security.iter('rules'):

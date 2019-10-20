@@ -8,13 +8,22 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 # supresses SSL warnings on console output
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-host = input("Enter Panorama's IP Address: ")
+# Pseudo Code
+# Verify there is a console connection to each device (panorama and firewalls)
+# Connect to panorama
+# Export Panorama and device config bundle
+# Get IP Address for all the firewalls
+# Connect to each firewall and export the device device device state
+# Issue a commit force on each firewall
+# Change master key on panorama
+# Change master key on firewall
 
-def all_connected_fws():
+# host = input("Enter Panorama's IP Address: ")
+
+def all_connected_fws_to_file():
     """Gets all firewalls connected to panorama.
-    Formats the XML data returned writes the firewall ip-addresses
-    to a file named 'fwips.txt'
-    """
+    Retrieves the firewall ip-addresses and writes
+    to a file named 'fwips.txt'"""
 
     output = requests.get('https://' + host + '/api/?type=op&cmd=<show>'
                           '<devices><all></all></devices></show>&key='
@@ -28,6 +37,18 @@ def all_connected_fws():
                 for item in node.iter():
                     fw_ip = item.text + '\n'
                     f.write(fw_ip)
+
+def commit_force():
+    """Reads a text file containing firewall IP Addresses and issues a
+    commit to each firewall"""
+
+    with open('fwips.txt', mode='r') as f:
+        lines = f.readlines()
+        for line in lines:
+            line = line.rstrip()
+            commit_f = requests.get('https://' + line + '/api/?type=commit&' + \
+                                    'cmd=<commit><force></force></commit>' + \
+                                     keys.pa_vm_a(), verify=False)
 
 def export_device_state():
     """Retrieve firewall device state file"""
@@ -46,7 +67,7 @@ def export_device_state():
                 f.write(data.content)
 
 
-
 if __name__ == '__main__':
     all_connected_fws()
-    export_device_state()
+    commit_force()
+    # export_device_state()

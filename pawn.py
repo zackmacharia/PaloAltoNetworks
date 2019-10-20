@@ -86,8 +86,8 @@ class Panorama(Pawn):
                 node = elem
                 fwip = node.text # Retrieve string format
                 fwips.append(fwip)
-        # return fwips
-        print(fwips)
+        return fwips
+        # print(fwips)
 
     def all_connected_fws_to_file(self):
         """Gets all firewalls connected to panorama.

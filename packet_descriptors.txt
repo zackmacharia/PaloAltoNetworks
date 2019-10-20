@@ -1,0 +1,57 @@
+*****************************************
+2019-10-04 11:18:32.055160: Time is in UTC
+*****************************************
+name : session (average) 
+value : 0,0,0,0,0,1,0,0,1,1,1,1 
+name : session (maximum) 
+value : 0,0,0,1,1,1,1,1,1,1,1,1 
+name : packet buffer (average) 
+value : 0,0,0,0,0,0,0,0,0,0,0,0 
+name : packet buffer (maximum) 
+value : 0,0,0,0,0,0,1,0,0,0,0,0 
+name : packet descriptor (average) 
+value : 0,0,0,0,0,0,0,0,0,0,0,0 
+name : packet descriptor (maximum) 
+value : 0,0,0,0,0,0,0,0,0,0,0,0 
+name : packet descriptor (on-chip) (average) 
+value : 2,2,2,2,2,2,2,2,2,2,2,2 
+name : packet descriptor (on-chip) (maximum) 
+value : 3,3,3,13,3,15,53,16,11,13,14,12 
+*****************************************
+2019-10-04 11:19:05.026963: Time is in UTC
+*****************************************
+name : session (average) 
+value : 0,0,0,0,0,1,0,0,1,1,1,1 
+name : session (maximum) 
+value : 0,0,0,1,1,1,1,1,1,1,1,1 
+name : packet buffer (average) 
+value : 0,0,0,0,0,0,0,0,0,0,0,0 
+name : packet buffer (maximum) 
+value : 0,0,0,0,0,0,1,0,0,0,0,0 
+name : packet descriptor (average) 
+value : 0,0,0,0,0,0,0,0,0,0,0,0 
+name : packet descriptor (maximum) 
+value : 0,0,0,0,0,0,0,0,0,0,0,0 
+name : packet descriptor (on-chip) (average) 
+value : 2,2,2,2,2,2,2,2,2,2,2,2 
+name : packet descriptor (on-chip) (maximum) 
+value : 3,3,3,13,3,15,53,16,11,13,14,12 
+*****************************************
+2019-10-04 13:49:39.637253: Time is in UTC
+*****************************************
+name : session (average) 
+value : 1,0,0,0,0,0,0,1,0,0,1,1 
+name : session (maximum) 
+value : 1,0,0,0,0,1,1,1,1,1,1,1 
+name : packet buffer (average) 
+value : 0,0,0,0,0,0,0,0,0,0,0,0 
+name : packet buffer (maximum) 
+value : 0,0,0,0,0,0,0,0,1,0,0,0 
+name : packet descriptor (average) 
+value : 0,0,0,0,0,0,0,0,0,0,0,0 
+name : packet descriptor (maximum) 
+value : 0,0,0,0,0,0,0,0,0,0,0,0 
+name : packet descriptor (on-chip) (average) 
+value : 2,2,2,2,2,2,2,2,2,2,2,2 
+name : packet descriptor (on-chip) (maximum) 
+value : 18,2,3,3,3,13,3,15,53,16,11,13 

@@ -19,7 +19,9 @@ int_no = input("Enter Firewall's Ethernet Port Number: ")
 
 
 def sub_int_ipaddr():
-    """Get Subinterfac IP Address from Palo Alto Firewall"""
+    """Get Subinterfac IP Address from Palo Alto Firewall. Recommend to use
+    an OID to poll for this information using SNMP if supported. Does
+    not 7K's but can easily be added if needed"""
 
     interface = "\'" +  'ethernet1/' + int_no + "\'" # formats userinput to 'ethernet1/<userinput>'
     split_int = interface.split('.')

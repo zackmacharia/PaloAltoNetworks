@@ -1,8 +1,8 @@
 from urllib import request
-import ssl
-import re
 import subprocess
 import api_key
+import ssl
+import re
 
 # Ignore SSL certificate errors
 ctx = ssl.create_default_context()
@@ -28,7 +28,6 @@ def download_latest_content():
     dl_content_data = fh.read().decode()
     return dl_content_data
 
-
 def get_cdl_jobid():
     if 'jobid' in dl_content_data:
         pattern_o = re.compile(r'(?<=<job>)(.*)(?=</job>)')
@@ -38,7 +37,6 @@ def get_cdl_jobid():
         return cdl_jobid
     else:
         print('Contest status progress failed; no job id found')
-
 
 def show_cdl_jobid_status():
     cmd_showjb = 'cmd=<show><jobs><id>' + cdl_jobid + '</id></jobs></show>'
@@ -52,7 +50,6 @@ def show_cdl_jobid_status():
         # print(j_status)
         return j_status
 
-
 def install_latest_content():
     """Install latest content"""
     cmd = 'cmd=<request><content><upgrade><install><version>latest' + \
@@ -63,7 +60,6 @@ def install_latest_content():
     install_content_data = fh.read().decode()
     return install_content_data
 
-
 def get_cinstall_j_id():
     if 'jobid' in install_content_data:
         pattern_o = re.compile(r'(?<=<job>)(.*)(?=</job>)')
@@ -73,7 +69,6 @@ def get_cinstall_j_id():
         return cinstall_j_id
     else:
         print('Contest status progress failed; no job id found')
-
 
 def show_cinstall_j_id_status():
     cmd_showjb = 'cmd=<show><jobs><id>' + cinstall_j_id + '</id></jobs></show>'
@@ -87,7 +82,6 @@ def show_cinstall_j_id_status():
         # print(j_status)
         return j_status
 
-
 def check_now():
     """Pull software database into the firewall"""
     cmd = 'cmd=<request><system><software><check>' + \
@@ -99,7 +93,6 @@ def check_now():
     result = format_result[1]
     print(result[:-1])
 
-
 def download_software():
     "Download software"
     cmd = 'cmd=<request><system><software><download><version>' + \
@@ -110,7 +103,6 @@ def download_software():
     dl_software_data = fh.read().decode()
     return dl_software_data
 
-
 def get_sdl_jobid():
     if 'jobid' in dl_software_data:
         pattern_o = re.compile(r'(?<=<job>)(.*)(?=</job>)')
@@ -120,7 +112,6 @@ def get_sdl_jobid():
         return sdl_jobid
     else:
         print('Contest status progress failed; no job id found')
-
 
 def show_sdl_jobid_status():
     cmd_showjb = 'cmd=<show><jobs><id>' + sdl_jobid + '</id></jobs></show>'
@@ -134,7 +125,6 @@ def show_sdl_jobid_status():
         # print(j_status)
         return j_status
 
-
 def install_software():
     "Install PANOS software"
     cmd = 'cmd=<request><system><software><install><version>' + \
@@ -145,7 +135,6 @@ def install_software():
     install_software_data = fh.read().decode()
     return install_software_data
 
-
 def get_sw_install_jobid():
     if 'jobid' in install_software_data:
         pattern_o = re.compile(r'(?<=<job>)(.*)(?=</job>)')
@@ -155,7 +144,6 @@ def get_sw_install_jobid():
         return sw_inst_jobid
     else:
         print('Contest status progress failed; no job id found')
-
 
 def show_sw_install_jobid_status():
     cmd_showjb = 'cmd=<show><jobs><id>' + sw_inst_jobid + '</id></jobs></show>'
@@ -169,7 +157,6 @@ def show_sw_install_jobid_status():
         # print(j_status)
         return j_status
 
-
 def device_reboot():
     """Reboot device"""
     cmd_reboot = 'cmd=<request><restart><system>' + \
@@ -178,7 +165,6 @@ def device_reboot():
     fh = request.urlopen(reboot, context=ctx)
     return fh
     # print(fh)
-
 
 def ping_device():
     output = subprocess.run(['ping', '-i 30', host])
