@@ -3,6 +3,7 @@ import getpass
 import re
 import time
 import xml.etree.cElementTree as ET
+from itertools import islice
 
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -87,7 +88,6 @@ class Panorama(Pawn):
                 fwip = node.text # Retrieve string format
                 fwips.append(fwip)
         return fwips
-        # print(fwips)
 
     def all_connected_fws_to_file(self):
         """Gets all firewalls connected to panorama.
@@ -147,27 +147,17 @@ class Firewall(Pawn):
         else:
             print('Failed to connect to' + self.ip + '. No files written.')
 
-        # data = output.text
-        # print(data)
-        # root = ET.fromstring(data)
-        # date = datetime.datetime.now()
-        # utc_time = datetime.datetime.utcnow()
+    def ha_status(self):
+        """Get Firewall HA Status"""
 
-        # with open('packet_descriptors.txt', mode='a+') as f:
-        #     f.write('*****************************************' + '\n')
-        #     f.write(str(utc_time) + ':' + ' Time is in UTC' + '\n')
-        #     f.write('*****************************************' + '\n')
-        #     for elem in root.iter():
-        #         if elem.tag == 'resource-utilization':
-        #             stats_node = elem
-        #             for child in stats_node:
-        #                 for item in child:
-        #                     tag = item.tag
-        #                     text = item.text
-        #                     stats = tag + ' ' + ':' + ' ' + text + ' ' + '\n'
-        #                     f.write(stats)
-
-
-# fw = Firewall('47.190.134.39')
-#
-# fw.descriptors_on_chip_to_file()
+        config_data = requests.get('https://' + self.ip + '/api/?type=op&cmd=<show>'
+                      '<high-availability><state></state></high-availability>'
+                      '</show>&key=' + keys.pa_vm_key(),verify=False)
+        config_data_string = config_data.text
+        config_data_xml = ET.fromstring(config_data_string)
+        # three 'enabled' elements are available in node; we only need the first one
+        for element in islice(config_data_xml.iter('enabled'),1):
+            if element.text == 'yes':
+                return 'HA is enabled'
+            else:
+                return 'HA not enabled'
