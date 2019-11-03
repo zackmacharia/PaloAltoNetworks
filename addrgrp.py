@@ -1,9 +1,11 @@
+import getpass
+
 import pan.xapi
 
 
 panorama = pan.xapi.PanXapi(hostname=input('Panorama IP Address: '),
-                               api_username=input('Username: '),
-                               api_password=input('Password: '))
+                            api_username=input('Username: '),
+                            api_password=getpass.getpass(prompt='Password: '))
 
 def addr_xpath(address_name):
     """Adress Object XPATH"""
@@ -16,24 +18,17 @@ def addr_netmask_xpath(ip_address):
 
     return "<ip-netmask>"+ip_address+"</ip-netmask>"
 
-def addrgrp_xpath():
-    """Adress Group XPATH"""
+def new_addrgrp_xpath():
+    """Create Adress Group XPATH"""
 
     address_group_name = input('Enter Address Group Name: ')
     return "/config/shared/address-group/entry[@name='" +\
     address_group_name + "']"
 
-def addrgrp_type_static():
+def addrgrp_static_xpath_element():
     """Adress Group Type"""
 
     return "<static />"
-
-def create_shared_address_group():
-    """Create a static address group. CAN THIS BE USED TO CHECK EXISTING
-    GROUP BEFORE CREATION?"""
-
-    addrgroup = addrgrp_xpath() + addrgrp_type_static()
-    print(addrgroup)
 
 def from_file_extract_ips():
     """Reads a file with ip addresses and returns a list of IPs"""
@@ -63,12 +58,22 @@ def create_name_and_ipaddr_dict():
     name_ipaddr_dict = dict(zip(keys, values))
     return name_ipaddr_dict
 
+def main():
 
-panorama.set(xpath=addrgrp_xpath(), element=addrgrp_type_static())
-from_file_create_address_name()
-from_file_extract_ips()
-dictionary = create_name_and_ipaddr_dict()
-for k,v in dictionary.items():
-    panorama.set(xpath=addr_xpath(k), element=addr_netmask_xpath(v))
-    panorama.set(xpath="/config/shared/address-group/entry[@name='test-group-0']",
-              element='<static><member>' + k + '</member></static>')
+    address_group_xpath = new_addrgrp_xpath()
+    panorama.set(xpath=address_group_xpath,
+                 element=addrgrp_static_xpath_element())
+    from_file_create_address_name()
+    from_file_extract_ips()
+    dictionary = create_name_and_ipaddr_dict()
+    count = 0
+    for k,v in dictionary.items():
+        count+=1
+        panorama.set(xpath=addr_xpath(k), element=addr_netmask_xpath(v))
+        panorama.set(xpath=address_group_xpath,
+                     element='<static><member>' + k + '</member></static>')
+    print('Ran', count, 'api calls')
+
+
+if __name__ == '__main__':
+    main()
