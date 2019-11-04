@@ -1,3 +1,5 @@
+"""You wiil need to pip install 'pan-python' before using this script"""
+
 import getpass
 
 import pan.xapi
@@ -30,41 +32,31 @@ def addrgrp_static_xpath_element():
 
     return "<static />"
 
-def from_file_extract_ips():
-    """Reads a file with ip addresses and returns a list of IPs"""
+def source_file():
+    "Allows user to enter filename with or without the '.txt' extension"
 
-    ip_list = []
-    with open('ip_list.txt') as f:
-        for line in f.readlines():
-            ip_address = line.rstrip()
-            ip_list.append(ip_address)
-    return ip_list
-
-def from_file_create_address_name():
-    """Reads a file with ip addresses and returns a list of IPs"""
-
-    address_names = []
-    for address in from_file_extract_ips():
-        format_name = 'addr-' + address.split('/')[0]
-        address_names.append(format_name)
-    return address_names
+    source_file = input('Enter the name of the text file: ')
+    if '.txt' not in source_file:
+        source_file = source_file + '.txt'
+    return source_file
 
 def create_name_and_ipaddr_dict():
-    """Takes two lists, one with address name and another with the IP address
-    value and returns one dictionary where names are the key and ip the value"""
+    """Reads a text file with IP Addreses and returns a dictionary with
+    key=ip address name and value=ipv4 address"""
 
-    keys = from_file_create_address_name()
-    values = from_file_extract_ips()
-    name_ipaddr_dict = dict(zip(keys, values))
-    return name_ipaddr_dict
+    ip_dict = {}
+    with open(source_file(), mode='r') as f:
+        for line in f.readlines():
+            ip_address = line.rstrip()
+            ip_name = 'addr-' + line.split('/')[0]
+            ip_dict[ip_name] = ip_address
+    return ip_dict
 
 def main():
 
     address_group_xpath = new_addrgrp_xpath()
     panorama.set(xpath=address_group_xpath,
                  element=addrgrp_static_xpath_element())
-    from_file_create_address_name()
-    from_file_extract_ips()
     dictionary = create_name_and_ipaddr_dict()
     count = 0
     for k,v in dictionary.items():
