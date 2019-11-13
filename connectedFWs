@@ -1,0 +1,57 @@
+import xml.etree.cElementTree as ET
+import getpass
+import requests
+import pandas as pd
+import re
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+host = input('Enter Panorama IP Address: ')
+username = input('Username: ')
+password = getpass.getpass(prompt='Password: ')
+sheet = input('Name your file: ')
+
+
+def get_api_key():
+
+    req_key = 'https://' + host + '/api/?type=keygen&user=' + username + '&password=' + password
+    data = requests.get(req_key, verify=False)
+    data_string = data.text
+    pattern = re.compile(r"<key>(.*?)</key>")
+    search = re.search(pattern, data_string)
+    key = search.group(1)  # targeting group with API key information
+    return key
+
+
+def all_connected_to_list():
+    """Gets all firewalls connected to panorama.
+    Retrieves the firewall ip-addresses and writes
+    to a file'"""
+
+    output = requests.get('https://' + host + '/api/?type=op&cmd=<show><devices><all></all></devices></show>&key='
+                          + get_api_key(), verify=False)
+    data = output.text
+    root = ET.fromstring(data)
+    ip_list = []
+    for elem in root.iter():
+        if elem.tag == 'ip-address':
+            node = elem
+            for item in node.iter():
+                # print(item.text)
+                ip_list.append(item.text)
+    return ip_list
+
+
+def write_to_excel():
+    df = pd.DataFrame({'IP Address': all_connected_to_list()})
+    writer = pd.ExcelWriter(sheet+'.xlsx', engine='xlsxwriter')
+    df.to_excel(writer, sheet_name='Sheet1', index=False)
+    writer.save()
+
+
+def main():
+    write_to_excel()
+
+
+if __name__ == '__main__':
+    main()
