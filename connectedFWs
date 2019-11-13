@@ -24,9 +24,7 @@ def get_api_key():
 
 
 def all_connected_to_list():
-    """Gets all firewalls connected to panorama.
-    Retrieves the firewall ip-addresses and writes
-    to a file'"""
+    """Gets all firewall ip addresses connected to Panorama and stores in a list'"""
 
     output = requests.get('https://' + host + '/api/?type=op&cmd=<show><devices><all></all></devices></show>&key='
                           + get_api_key(), verify=False)
@@ -37,7 +35,6 @@ def all_connected_to_list():
         if elem.tag == 'ip-address':
             node = elem
             for item in node.iter():
-                # print(item.text)
                 ip_list.append(item.text)
     return ip_list
 
