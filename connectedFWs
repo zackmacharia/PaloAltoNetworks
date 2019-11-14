@@ -1,8 +1,9 @@
 import xml.etree.cElementTree as ET
 import getpass
-import requests
-import pandas as pd
 import re
+import requests
+import pandas as pd  # pip install xlsxwriter but do not import
+
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
@@ -42,7 +43,7 @@ def all_connected_to_list():
 def write_to_excel():
     df = pd.DataFrame({'IP Address': all_connected_to_list()})
     writer = pd.ExcelWriter(sheet+'.xlsx', engine='xlsxwriter')
-    df.to_excel(writer, sheet_name='Sheet1', index=False)
+    df.to_excel(writer, sheet_name='Firewalls', index=False)
     writer.save()
 
 
