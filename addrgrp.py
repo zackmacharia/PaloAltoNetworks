@@ -1,4 +1,4 @@
-"""You wiil need to pip install 'pan-python' before using this script"""
+"""You will need to pip install 'pan-python' before using this script"""
 
 import getpass
 
@@ -9,16 +9,19 @@ panorama = pan.xapi.PanXapi(hostname=input('Panorama IP Address: '),
                             api_username=input('Username: '),
                             api_password=getpass.getpass(prompt='Password: '))
 
+
 def addr_xpath(address_name):
     """Adress Object XPATH"""
 
     return "/config/shared/address/entry[@name='" +\
     address_name + "']"
 
+
 def addr_netmask_xpath(ip_address):
     """Address Netmask XPATH"""
 
     return "<ip-netmask>"+ip_address+"</ip-netmask>"
+
 
 def new_addrgrp_xpath():
     """Create Adress Group XPATH"""
@@ -27,10 +30,12 @@ def new_addrgrp_xpath():
     return "/config/shared/address-group/entry[@name='" +\
     address_group_name + "']"
 
+
 def addrgrp_static_xpath_element():
     """Adress Group Type"""
 
     return "<static />"
+
 
 def source_file():
     "Allows user to enter filename with or without the '.txt' extension"
@@ -39,6 +44,7 @@ def source_file():
     if '.txt' not in source_file:
         source_file = source_file + '.txt'
     return source_file
+
 
 def create_name_and_ipaddr_dict():
     """Reads a text file with IP Addreses and returns a dictionary with
@@ -51,6 +57,7 @@ def create_name_and_ipaddr_dict():
             ip_name = 'addr-' + line.split('/')[0]
             ip_dict[ip_name] = ip_address
     return ip_dict
+
 
 def main():
 
