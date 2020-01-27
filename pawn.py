@@ -13,7 +13,7 @@ from Keys import keys
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
-class Pawn():
+class Pawn:
     """Base class for Firewall and Panorama class"""
 
     def __init__(self, ip):
@@ -147,7 +147,7 @@ class Firewall(Pawn):
         else:
             print('Failed to connect to' + self.ip + '. No files written.')
 
-    def ha_status(self):
+    def get_ha_status(self):
         """Get Firewall HA Status"""
 
         config_data = requests.get('https://' + self.ip + '/api/?type=op&cmd=<show>'
@@ -155,9 +155,26 @@ class Firewall(Pawn):
                       '</show>&key=' + keys.pa_vm_key(),verify=False)
         config_data_string = config_data.text
         config_data_xml = ET.fromstring(config_data_string)
-        # three 'enabled' elements are available in node; we only need the first one
+        # Three 'enabled' elements available in node; only need the first one
         for element in islice(config_data_xml.iter('enabled'),1):
             if element.text == 'yes':
                 return 'HA is enabled'
             else:
                 return 'HA not enabled'
+
+    def check_link_monitoring_enabled(self):
+        """Check if link monitoring is enabled Run function on HA enabled fiewalls.
+         Use the 'get_ha_status' to query if needed. """
+
+        config_data = requests.get('https://' + self.ip + '/api/?type=op&cmd=<show>'
+                      '<high-availability><link-monitoring></link-monitoring>'
+                      '</high-availability></show>&key=' +\
+                       keys.pa_vm_key(),verify=False)
+        config_data_string = config_data.text
+        config_data_xml = ET.fromstring(config_data_string)
+        # Three 'enabled' elements available in node; only need the second one
+        for element in islice(config_data_xml.iter('enabled'),1,2):
+                if element.text == 'yes':
+                    return 'Link monitoring is enabled'
+                else:
+                    return 'Link monitoring not enabled'

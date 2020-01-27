@@ -1,0 +1,4 @@
+provider:
+  username: 'admin' # required
+  password: 'paloalto' # required
+  ip_address: '10.46.161.149' # required

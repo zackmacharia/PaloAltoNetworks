@@ -44,4 +44,4 @@ from pawn import Firewall
 
 fw = Firewall('47.190.134.39:7443')
 if __name__ == '__main__':
-    fw.descriptors_on_chip_to_file()
+    fw.descriptors_on_chip_to_fi
