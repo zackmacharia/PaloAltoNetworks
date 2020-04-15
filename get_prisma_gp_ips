@@ -1,0 +1,52 @@
+"""
+This script makes API calls to GlobalProtect Cloud Service and retrieves IP Information.
+Creator: Zack Macharia
+"""
+import requests
+from secret import api_key
+requests.packages.urllib3.disable_warnings() 
+
+
+class PrismaGp:
+
+    portal_endpoint = 'https://api.gpcloudservice.com/getAddrList/latest?fwType=gpcs_gp_portal&addrType=loopback_ip'
+    gw_endpoint = 'https://api.gpcloudservice.com/getAddrList/latest?fwType=gpcs_gp_gw&addrType=loopback_ip'
+    headers = {'header-api-key':api_key()}
+
+    def __init__(self):
+        pass
+        
+    
+
+    def portal_loopback_ips(self):
+        
+        api_call = requests.get(self.portal_endpoint, headers=self.headers, verify=False)
+        data = api_call.json()
+        ips_list = data['result']['addrList']
+        ip_list = []
+        for ip in ips_list:
+            ip_list.append(ip)
+        return ip_list
+        
+
+    def gateway_loopback_ips(self):
+        
+        api_call = requests.get(self.gw_endpoint, headers=self.headers, verify=False)
+        data = api_call.json()
+        ips_list = data['result']['addrList']
+        ip_list = []
+        for ip in ips_list:
+            ip_list.append(ip)
+        return ip_list
+        
+
+def main():
+    prisma_gp = PrismaGp()
+    print('\nPortal Loopback IPs')
+    print(prisma_gp.portal_loopback_ips())
+    print('\nGateway Loopback IPs')
+    print(prisma_gp.gateway_loopback_ips())
+    
+
+if __name__ == '__main__':
+    main()
