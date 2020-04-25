@@ -16,9 +16,6 @@ def prisma_api_key():
     return 'YOUR_API_KEY_GOES_HERE_BETWEEN_THE_SINGLE_QUOTES'
 Save your changes.
 
-This script requires that `requests` be installed within the Python environment you are running this script in.
-**pip3 install requests.
-
 usage: prismaAccessIPRetriever.py [-h] [-spl] [-wpl] [-sgl] [-wgl] [-sa] [-wa]
 
 Retrieve Prisma Access IP Addresses
@@ -43,100 +40,100 @@ at https://www.paloaltonetworks.com/legal/script-software-license-1-0.pdf
 
 # TODO
 # Support all other IP Types
-import sys
+import json
 import argparse
-import requests
+import subprocess
 from pathlib import Path
 from secrets import prisma_api_key
-
-requests.packages.urllib3.disable_warnings()
 
 
 class PrismaGp:
 
-    portal_endpoint = 'https://api.gpcloudservice.com/getAddrList/latest?fwType=gpcs_gp_portal&addrType=loopback_ip'
-    gw_endpoint = 'https://api.gpcloudservice.com/getAddrList/latest?fwType=gpcs_gp_gw&addrType=loopback_ip'
-    all = 'https://api.gpcloudservice.com/getAddrList/latest?get_egress_ip_all=yes'
-    headers = {'header-api-key': prisma_api_key()}
+    portal_endpoint = ['https://api.gpcloudservice.com/getAddrList/latest?fwType=gpcs_gp_portal&addrType=loopback_ip']
+    gw_endpoint = ['https://api.gpcloudservice.com/getAddrList/latest?fwType=gpcs_gp_gw&addrType=loopback_ip']
+    all_endpoint = ['https://api.gpcloudservice.com/getAddrList/latest?get_egress_ip_all=yes']
+    args = ['curl', '-sk', '-H', 'header-api-key:' + prisma_api_key()]
+
+    def __create_ip_list(self, api_call):
+        output = api_call.communicate()
+        data = json.loads(output[0])
+        ips_list = data['result']['addrList']
+        return ips_list
+
+    def __display_ip_list(self, api_call):
+        output = api_call.communicate()
+        data = json.loads(output[0])
+        ips_list = data['result']['addrList']
+        return ips_list
+
+    def __write_to_file(self, fname, ip_list):
+        with open(fname, mode='a') as f:
+            for item in ip_list:
+                split_item = item.split(':')
+                ip = split_item[1]
+                f.write(ip + '\n')
+        result = f'successfully created {fname.name} file'
+        return result
 
     def show_portal_loopback_ips(self):
         """Returns portal loopback IP addresses as a list of strings. Formatted as 'Region:IP Addresses"""
 
-        api_call = requests.get(self.portal_endpoint, headers=self.headers, verify=False)
-        data = api_call.json()
-        ips_list = data['result']['addrList']
-        ip_list = []
-        for ip in ips_list:
-            ip_list.append(ip)
+        curl_portal_setup = self.args + self.portal_endpoint
+        api_call = subprocess.Popen(curl_portal_setup, stdout=subprocess.PIPE)
+        ip_list = self.__display_ip_list(api_call)
+        return ip_list
+
+    def show_gateway_loopback_ips(self):
+        """Returns gateway loopback IP addresses as a list of strings. Formatted as 'Region:IP Addresses"""
+
+        curl_gw_setup = self.args + self.gw_endpoint
+        api_call = subprocess.Popen(curl_gw_setup, stdout=subprocess.PIPE)
+        ip_list = self.__display_ip_list(api_call)
+        return ip_list
+
+    def show_all_ips(self):
+        """Returns all IP addresses as a list of strings."""
+
+        curl_all_setup = self.args + self.all_endpoint
+        api_call = subprocess.Popen(curl_all_setup, stdout=subprocess.PIPE)
+        ip_list = self.__display_ip_list(api_call)
         return ip_list
 
     def write_portal_loopback_ips(self):
         """writes portal loopback IP addresses to a file"""
 
-        api_call = requests.get(self.portal_endpoint, headers=self.headers, verify=False)
-        data = api_call.json()
-        ips_list = data['result']['addrList']
+        curl_portal_setup = self.args + self.portal_endpoint
+        api_call = subprocess.Popen(curl_portal_setup, stdout=subprocess.PIPE)
+        ip_list = self.__create_ip_list(api_call)
         fname = Path('portal_loopback_ips.txt')
         if fname.is_file():
             fname.unlink()
-        with open(fname, mode='a') as f:
-            for item in ips_list:
-                split_item = item.split(':')
-                ip = split_item[1]
-                f.write(ip + '\n')
-        result = f'successfully created {fname.name} file'
+        result = self.__write_to_file(fname, ip_list)
         return result
-
-    def show_gateway_loopback_ips(self):
-        """Returns gateway loopback IP addresses as a list of strings. Formatted as 'Region:IP Addresses"""
-
-        api_call = requests.get(self.gw_endpoint, headers=self.headers, verify=False)
-        data = api_call.json()
-        ips_list = data['result']['addrList']
-        ip_list = []
-        for ip in ips_list:
-            ip_list.append(ip)
-        return ip_list
 
     def write_gateway_loopback_ips(self):
         """writes gateway loopback IP addresses to a file"""
 
-        api_call = requests.get(self.gw_endpoint, headers=self.headers, verify=False)
-        data = api_call.json()
-        ips_list = data['result']['addrList']
+        curl_gw_setup = self.args + self.gw_endpoint
+        api_call = subprocess.Popen(curl_gw_setup, stdout=subprocess.PIPE)
+        ip_list = self.__create_ip_list(api_call)
         fname = Path('gateway_loopback_ips.txt')
         if fname.is_file():
             fname.unlink()
-        with open(fname, mode='a') as f:
-            for item in ips_list:
-                split_item = item.split(':')
-                ip = split_item[1]
-                f.write(ip + '\n')
-        result = f'successfully created {fname.name} file'
+        result = self.__write_to_file(fname, ip_list)
         return result
-
-    def show_all_ips(self):
-        """Returns all IP addresses as a list of strings."""
-
-        api_call = requests.get(self.all, headers=self.headers, verify=False)
-        data = api_call.json()
-        ips_list = data['result']['addrList']
-        ip_list = []
-        for ip in ips_list:
-            ip_list.append(ip)
-        return ip_list
 
     def write_all_ips(self):
         """writes all Prisma Access IP addresses to a file"""
 
-        api_call = requests.get(self.all, headers=self.headers, verify=False)
-        data = api_call.json()
-        ips_list = data['result']['addrList']
-        fname = Path('prisma_access_ips.txt')
+        curl_all_setup = self.args + self.all_endpoint
+        api_call = subprocess.Popen(curl_all_setup, stdout=subprocess.PIPE)
+        ip_list = self.__create_ip_list(api_call)
+        fname = Path('prisma_ips.txt')
         if fname.is_file():
             fname.unlink()
         with open(fname, mode='a') as f:
-            for ip in ips_list:
+            for ip in ip_list:
                 f.write(ip + '\n')
         result = f'successfully created {fname.name} file'
         return result
