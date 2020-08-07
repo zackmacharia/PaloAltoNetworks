@@ -26,5 +26,5 @@ class Firewall:
         print(key)
 
 
-pavma = Firewall('10.46.160.82')
+pavma = Firewall('192.0.2.1')
 pavma.get_api_key()
