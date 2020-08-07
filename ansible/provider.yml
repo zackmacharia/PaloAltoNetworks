@@ -1,4 +1,4 @@
 provider:
-  username: 'admin' # required
-  password: 'paloalto' # required
-  ip_address: '10.46.161.149' # required
+  username: 'username_here' # required
+  password: 'password_here' # required
+  ip_address: 'fw_ip_address_here' # required
