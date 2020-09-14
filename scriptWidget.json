@@ -1,0 +1,7 @@
+{
+  "id": "Unique Identifier for the widget",
+  "name": "ER IP Location",
+  "dataType": "scripts",
+  "widgetType": "table",
+  "query": "EscapeRoomGetCountryForIP"
+}

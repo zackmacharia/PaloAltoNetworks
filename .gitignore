@@ -1,2 +1,4 @@
+*.xml
+*.txt
 Keys
 __pycache__
