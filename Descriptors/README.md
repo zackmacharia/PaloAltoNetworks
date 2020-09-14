@@ -16,6 +16,8 @@ host = 'fw_ip_address' to host = '192.168.0.1'
 ### keys.py
 return 'YOUR_FIREWALL_API_KEY' to return 'fereig#ehraih=be3h8'
 
+CD to the directory where your script is located and run 'python descriptors.py'
+
 ## Output
 Check the "packet_descriptors.txt" file
 
