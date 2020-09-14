@@ -9,7 +9,8 @@ class Firewall:
         """Class instantiation"""
         
         self.ip = ip
-        self.username = 'admin'
+        # self.username = 'admin'
+        self.username = 'zmacharia'
         self.password = 'paloalto'
 
     def get_api_key(self):
@@ -26,5 +27,5 @@ class Firewall:
         print(key)
 
 
-pavma = Firewall('192.0.2.1')
+pavma = Firewall('192.168.0.1')
 pavma.get_api_key()
