@@ -1,15 +1,11 @@
-import key # API Key stored on a different file
+import keys
 import datetime
-import requests
 import xml.etree.cElementTree as ET
-
-host = 'fw_ip_address'
-
-
 import requests
-import socket
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+host = 'fw_ip_address'
 
 
 def hour_resource_monitor():
@@ -19,7 +15,7 @@ def hour_resource_monitor():
     output = requests.get('https://'+ host + '/api/?type=op&cmd=<show>'
                           '<running><resource-monitor><hour><last>1</last>'
                           '</hour></resource-monitor></running></show>'
-                          '&key='+key.pa_vm_a_key, verify=False)
+                          '&key=' + keys.firewall_api_key(), verify=False)
     data = output.text
     root = ET.fromstring(data)
     date = datetime.datetime.now()
@@ -40,4 +36,5 @@ def hour_resource_monitor():
                         f.write(stats)
 
 
-hour_resource_monitor()
+if __name__ == '__main__':
+    hour_resource_monitor()
