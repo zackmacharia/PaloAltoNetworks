@@ -5,7 +5,7 @@ import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-host = 'fw_ip_address'
+host = 'fw_ip_address'  # replace this value with your firewall IP address 
 
 
 def hour_resource_monitor():
