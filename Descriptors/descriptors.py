@@ -18,7 +18,6 @@ def hour_resource_monitor():
                           '&key=' + keys.firewall_api_key(), verify=False)
     data = output.text
     root = ET.fromstring(data)
-    date = datetime.datetime.now()
     utc_time = datetime.datetime.utcnow()
 
     with open('packet_descriptors.txt', mode='a+') as f:
