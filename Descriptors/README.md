@@ -12,7 +12,7 @@ If decide to store the key.py in a different directory from where the descriptor
 
 ## Example: Running the script
 Change directory to where your script is located  
-python descriptors.py -ip 192.168.0.1 --hour 2 -o my-file-output  
+*python descriptors.py -ip 192.168.0.1 --hour 2 -o my-file-output*    
 
 ## Output
 Check the "my-file-output" file
