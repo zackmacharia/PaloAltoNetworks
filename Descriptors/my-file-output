@@ -1,0 +1,19 @@
+*****************************************
+2020-09-15 22:33:40.346495: Time is in UTC
+*****************************************
+name : session (average) 
+value : 0,0 
+name : session (maximum) 
+value : 1,0 
+name : packet buffer (average) 
+value : 0,0 
+name : packet buffer (maximum) 
+value : 1,0 
+name : packet descriptor (average) 
+value : 0,0 
+name : packet descriptor (maximum) 
+value : 0,0 
+name : packet descriptor (on-chip) (average) 
+value : 2,2 
+name : packet descriptor (on-chip) (maximum) 
+value : 4,3 
