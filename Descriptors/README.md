@@ -6,15 +6,14 @@ Python3
 Virtual Environment (Optional but recommended)
 Requests Module - https://requests.readthedocs.io/en/master/user/install/#install  
 
-## Example:
-Edit script by replacing the following:
-### descriptor.py
-host = 'fw_ip_address' to host = '192.168.0.1'
-### keys.py
-return 'YOUR_FIREWALL_API_KEY' to return 'fereig#ehraih=be3h8'
+## Usage Guidelines:
+Update the key.py file with your API key.  
+If decide to store the key.py in a different directory from where the descriptors.py file is located make sure you make modifications to the code with the full path.
 
-CD to the directory where your script is located and run 'python descriptors.py'
+## Example: Running the script
+Change directory to where your script is located  
+python descriptors.py -ip 192.168.0.1 --hour 2 -o my-file-output  
 
 ## Output
-Check the "packet_descriptors.txt" file
+Check the "my-file-output" file
 
