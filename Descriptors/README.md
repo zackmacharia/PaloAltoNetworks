@@ -3,7 +3,7 @@ This script makes an API call to a firewall, gathers the resource-monitor statis
 
 ## Requirements
 Python3
-Virtual Environment (Optional but recommended)  
+Virtual Environment - optional but recommended    
 Requests Module - https://requests.readthedocs.io/en/master/user/install/#install  
 
 ## Usage Guidelines:
