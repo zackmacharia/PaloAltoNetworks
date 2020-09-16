@@ -1,5 +1,5 @@
 # descriptor.py
-This script makes an API call to a firewall, gathers the resource-monitor statistics for the last hour, parses the data to retrieve CPU utilization for packet descriptors on-chip, and then writes the data in a text file.
+This script makes an API call to a firewall, gathers the resource-monitor statistics, parses the data to retrieve CPU utilization for packet descriptors on-chip, and then writes the data in a text file.
 
 ## Requirements
 Python3
