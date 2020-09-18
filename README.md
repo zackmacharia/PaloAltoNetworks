@@ -10,7 +10,12 @@ Scripts tested in a *nix environment specifically MacOS. Slight modifications mi
 ## 2. Panorama    
       Panorama specific scripts.
 
-## 3. Prisma 
+## 3. PANW 
+      Scripts for both Panorama and Firewalls.
+- ### List-Admins  
+   Retrieves list of configured Administrators and their Roles.  
+   
+## 4. Prisma 
       Prisma specific scripts.
 - ### PrismaAccess  
    Retrieves Prisma Access IPs from the Cloud

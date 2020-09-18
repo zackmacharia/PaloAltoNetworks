@@ -1,4 +1,0 @@
-provider:
-  username: 'username_here' # required
-  password: 'password_here' # required
-  ip_address: 'fw_ip_address_here' # required

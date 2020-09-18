@@ -1,5 +1,0 @@
----
-all:
-  hosts:
-    firewalls:
-      10.46.161.149:
