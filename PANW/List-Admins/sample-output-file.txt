@@ -1,0 +1,4 @@
+admin : superuser
+bob : Engineering
+wally : Operations
+automator : api_only
