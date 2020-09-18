@@ -140,7 +140,9 @@ class PrismaGp:
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Retrieve Prisma Access IP Addresses')
+    parser = argparse.ArgumentParser(description='Retrieve Prisma Access IP Addresses',
+                                     epilog='Please report any iss'
+                                            'https://github.com/zackmacharia/PaloAltoNetworks/tree/master/PrismaAccess')
     parser.add_argument('-spl', '--show-portal-lb',
                         action='store_true',
                         help='display portal loopback ips')
