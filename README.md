@@ -7,10 +7,11 @@ This scripts were built in a *nix environment specifically MacOS. Slight modific
     Checks firewall's packet descriptors on chip average and maximum CPU percentage  
 
 ## 2. Panorama    
-- ### PrismaAccess  
-   Retrieves Prisma Access IPs from the Cloud  
+  
 
 ## 3. Prisma 
+- ### PrismaAccess  
+   Retrieves Prisma Access IPs from the Cloud
 
 
 
