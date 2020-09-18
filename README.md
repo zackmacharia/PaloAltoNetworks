@@ -1,6 +1,6 @@
 # PaloAltoNetworks
 All scripts are written using python3 - https://www.python.org/downloads/  
-This scripts were built in a *nix environment specifically MacOS. Slight modifications might be required for Windows.
+Scripts tested in a *nix environment specifically MacOS. Slight modifications might be required for Windows.
 
 ## 1. Firewall  
 - ### Descriptors  
