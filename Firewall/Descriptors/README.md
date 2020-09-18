@@ -8,7 +8,7 @@ Requests Module - https://requests.readthedocs.io/en/master/user/install/#instal
 
 ## Usage Guidelines:
 Update the key.py file with your API key.  
-If decide to store the key.py in a different directory from where the descriptors.py file is located make sure you make modifications to the code with the full path.
+If the key.py is stored in a different directory from where the descriptors.py file is located make sure you make modifications to the code with the full path.
 
 ## Example: Running the script
 Change directory to where your script is located  
