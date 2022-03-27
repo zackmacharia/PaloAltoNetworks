@@ -13,7 +13,7 @@ def display_process_id(process_name):
             return line
 
 
-pano = panorama.Panorama('10.46.164.193', 'zmacharia', 'paloalto')
+pano = panorama.Panorama('fw_ip_address', 'username', 'password')
 
 dallas_dg = panorama.DeviceGroup('Test')  # creating device group object
 pano.add(dallas_dg)  # adding device group to the panorama object
