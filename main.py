@@ -2,11 +2,10 @@ from time import sleep
 
 from pawn import Panorama, Firewall
 
-# pavma = Firewall('10.46.160.82', 'admin', 'paloalto')
-# panvm = Panorama('10.46.164.193', 'admin', 'paloalto')
-pavma = Firewall('10.46.160.82')
-sgpa200 = Firewall('47.190.134.39:7443')
-panvm = Panorama('10.46.164.193')
+
+pavma = Firewall('fw_ip_address')
+sgpa200 = Firewall('fw_ip_address')
+panvm = Panorama('pano_ip_address')
 
 test_option = input('Enter 1 to test PAN and 2 to test FW: ')
 
