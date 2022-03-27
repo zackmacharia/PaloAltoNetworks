@@ -1,7 +1,7 @@
 import requests
 from Keys import keys
 
-url = '192.168.0.1'
+url = 'fw_ip_address'
 api_path = '/api/?type=op&cmd=<request><tech-support><dump></dump>'\
     '</tech-support></request>'
 full_url = 'https://' + url + api_path + '&key=' + keys.pa_vm_key()
@@ -20,7 +20,7 @@ def generate_tsf(host):
     print(api_call)
 
 
-generate_tsf('23.3.3.3')
+generate_tsf('fw_ip_address')
 
 # def from_file_extract_ips():
 #     """Reads a file with ip addresses and returns a list of IPs"""
