@@ -43,9 +43,9 @@ def log_at_start(host):
 
     # apikey = keys.sg_pa_200_key()
     apikey = keys.pa_vm_key()
-    rules = fw_sec_rule_names('10.46.160.82')
+    rules = fw_sec_rule_names('fw_ip_address')
     for rule in rules:
-    # for rule in fw_sec_rule_names('47.190.134.39:7443'):
+    # for rule in fw_sec_rule_names('fw_ip_address'):
         xpath = "https://" + host + "/api/?type=config&action=show&xpath=/config/"
         xpath += "devices/entry[@name='localhost.localdomain']/vsys/entry[@name="
         xpath += "'vsys1']/rulebase/security/rules/entry[@name='" + rule + "']"
@@ -87,6 +87,6 @@ def log_at_start(host):
 
 
 # local_run_cfg()
-# fw_sec_rule_names('47.190.134.39:7443')
-# log_at_start('47.190.134.39:7443')
-log_at_start('10.46.160.82')
+# fw_sec_rule_names('fw_ip_address')
+# log_at_start('fw_ip_address')
+log_at_start('fw_ip_address')
