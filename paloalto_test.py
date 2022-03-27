@@ -38,5 +38,5 @@ def commit_force(self):
         print(f'Commit to {self.ip} successful')
 
 
-platform_info('10.46.160.82')
-# platform_info('10.46.164.193')
+platform_info('fw_ip_address')
+
