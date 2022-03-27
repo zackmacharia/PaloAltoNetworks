@@ -9,7 +9,7 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
-host = '10.46.164.193'
+host = 'fw_ip_address'
 key = '&key=' + keys.pan_vm_key()
 
 
