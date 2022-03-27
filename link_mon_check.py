@@ -25,15 +25,14 @@ panorama_connected_fws = pan_vm.all_connected_fws()
 #         print(fw)
 
 
-# fw = '10.46.160.233'
-# fw = '10.46.160.34'
+
 
 
 def get_link_mon_group_element():
         """Check if link monitoring is enabled Run function on HA enabled fiewalls.
          Use the 'get_ha_status' to query if needed. """
 
-        config_data = requests.get('https://' + '10.46.160.219' + '/api/?type=op&cmd=<show>'
+        config_data = requests.get('https://' + 'fw_ip_address' + '/api/?type=op&cmd=<show>'
                        '<high-availability><link-monitoring></link-monitoring>'
                       '</high-availability></show>&key=' +\
                        keys.pa_vm_key(),verify=False)
