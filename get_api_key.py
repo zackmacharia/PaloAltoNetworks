@@ -27,5 +27,5 @@ class Firewall:
         print(key)
 
 
-pavma = Firewall('192.168.0.1')
+pavma = Firewall('fw_ip_address')
 pavma.get_api_key()
